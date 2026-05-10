@@ -1,0 +1,379 @@
+import Link from "next/link";
+
+const ForgeLogo = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#0a0d12"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 2 L4 7 L4 17 L12 22 L20 17 L20 7 Z" />
+    <path d="M12 7 L12 17" />
+    <path d="M8 9 L16 9" />
+    <path d="M8 13 L16 13" />
+  </svg>
+);
+
+const Logo = () => (
+  <Link href="/" className="nf-logo">
+    <span className="nf-logo-mark">
+      <ForgeLogo />
+    </span>
+    Nas<span>forge</span>
+  </Link>
+);
+
+export default function HomePage() {
+  return (
+    <>
+      <header className="nf-header">
+        <div className="nf-header-inner">
+          <Logo />
+          <nav className="nf-nav">
+            <Link href="#tutos">Tutoriels</Link>
+            <Link href="#hardware">Hardware</Link>
+            <Link href="#journal">Journal</Link>
+            <Link href="#about">À propos</Link>
+            <a
+              href="https://github.com/nanog1980"
+              className="nf-nav-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub →
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <section className="nf-hero">
+        <div>
+          <span className="nf-hero-eyebrow">
+            Build journal · TrueNAS Scale 25.04
+          </span>
+          <h1>
+            Forge ton propre <em>NAS</em>, pièce par pièce.
+          </h1>
+          <p className="lead">
+            Tutoriels concrets pour construire un NAS de zéro : sélection des
+            composants, assemblage, install TrueNAS Scale, partages, sauvegarde,
+            monitoring. Sans bullshit, captures à l&apos;appui.
+          </p>
+          <div className="nf-hero-cta">
+            <Link href="#tutos" className="nf-btn-primary">
+              Commencer le guide →
+            </Link>
+            <Link href="#hardware" className="nf-btn-ghost">
+              Voir le matériel
+            </Link>
+          </div>
+        </div>
+        <div className="nf-hero-visual">
+          <div className="nf-terminal-header">
+            <span className="nf-term-dot r" />
+            <span className="nf-term-dot y" />
+            <span className="nf-term-dot g" />
+            <span className="nf-term-title">truenas@forge:~$</span>
+          </div>
+          <div className="nf-terminal-body">
+            <div>
+              <span className="nf-term-prompt">$</span>{" "}
+              <span className="nf-term-cmd">zpool status tank</span>
+            </div>
+            <div className="nf-term-out">
+              {"  "}pool: <span className="nf-term-hl">tank</span>
+            </div>
+            <div className="nf-term-out">
+              {" "}state: <span className="nf-term-ok">ONLINE</span>
+            </div>
+            <div className="nf-term-out">
+              {"  "}scan: scrub repaired 0B in 02:14:33
+            </div>
+            <div className="nf-term-out">&nbsp;</div>
+            <div className="nf-term-out">config:</div>
+            <div className="nf-term-out">
+              {"  "}NAME{"           "}STATE{"   "}READ WRITE
+            </div>
+            <div className="nf-term-out">
+              {"  "}tank{"           "}ONLINE{"     "}0{"     "}0
+            </div>
+            <div className="nf-term-out">
+              {"    "}raidz2-0{"     "}ONLINE{"     "}0{"     "}0
+            </div>
+            <div className="nf-term-out">
+              {"      "}<span className="nf-term-hl">sda</span>
+              {"        "}ONLINE{"     "}0{"     "}0
+            </div>
+            <div className="nf-term-out">
+              {"      "}<span className="nf-term-hl">sdb</span>
+              {"        "}ONLINE{"     "}0{"     "}0
+            </div>
+            <div className="nf-term-out">
+              {"      "}<span className="nf-term-hl">sdc</span>
+              {"        "}ONLINE{"     "}0{"     "}0
+            </div>
+            <div className="nf-term-out">
+              {"      "}<span className="nf-term-hl">sdd</span>
+              {"        "}ONLINE{"     "}0{"     "}0
+            </div>
+            <div className="nf-term-out">&nbsp;</div>
+            <div className="nf-term-comment">
+              # 4× 8 TB en RAIDZ2 → 16 TB utiles, 2 disques de tolérance
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="nf-stats">
+        <div className="nf-stats-inner">
+          <div>
+            <div className="nf-stat-num">12</div>
+            <div className="nf-stat-label">Tutoriels publiés</div>
+          </div>
+          <div>
+            <div className="nf-stat-num">32 To</div>
+            <div className="nf-stat-label">Capacité brute</div>
+          </div>
+          <div>
+            <div className="nf-stat-num">~850 €</div>
+            <div className="nf-stat-label">Coût total du build</div>
+          </div>
+          <div>
+            <div className="nf-stat-num">99.9%</div>
+            <div className="nf-stat-label">Uptime sur 12 mois</div>
+          </div>
+        </div>
+      </div>
+
+      <section id="tutos" className="nf-section">
+        <div className="nf-section-inner">
+          <div className="nf-section-header">
+            <div className="nf-section-eyebrow">// tutoriels</div>
+            <h2 className="nf-section-title">
+              Le guide complet, organisé par étape.
+            </h2>
+            <p className="nf-section-desc">
+              Chaque article est autonome — tu peux suivre l&apos;ordre du build
+              ou aller directement à ce qui t&apos;intéresse. Captures, code
+              copiable, valeurs réelles.
+            </p>
+          </div>
+          <div className="nf-tut-grid">
+            {tutorials.map((t) => (
+              <Link key={t.title} href={t.href} className="nf-tut-card">
+                <span className={`nf-tut-tag ${t.tag}`}>{t.tagLabel}</span>
+                <h3>{t.title}</h3>
+                <p>{t.desc}</p>
+                <div className="nf-tut-meta">
+                  <span>{t.step}</span>
+                  <span>{t.read}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="hardware" className="nf-section nf-section-elevated">
+        <div className="nf-section-inner">
+          <div className="nf-section-header">
+            <div className="nf-section-eyebrow">// build de référence</div>
+            <h2 className="nf-section-title">
+              Mon build : ~850 €, 32 To brut, ECC, silencieux.
+            </h2>
+            <p className="nf-section-desc">
+              Chaque pièce est testée et fait tourner mon NAS depuis plus
+              d&apos;un an. Les liens d&apos;achat n&apos;ont pas de tracking,
+              et je précise quand un compromis est possible.
+            </p>
+          </div>
+          <div className="nf-hw-grid">
+            {hardware.map((h) => (
+              <div key={h.name} className="nf-hw-card">
+                <div className="nf-hw-img">[ photo {h.imgLabel} ]</div>
+                <div className="nf-hw-body">
+                  <div className="nf-hw-name">{h.name}</div>
+                  <div
+                    className="nf-hw-spec"
+                    dangerouslySetInnerHTML={{ __html: h.spec }}
+                  />
+                  <div className="nf-hw-price">{h.price}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="journal" className="nf-section">
+        <div className="nf-section-inner">
+          <div className="nf-section-header">
+            <div className="nf-section-eyebrow">// journal de build</div>
+            <h2 className="nf-section-title">
+              Notes de bord, debugging, leçons apprises.
+            </h2>
+            <p className="nf-section-desc">
+              Le côté brut du projet — ce qui a planté, comment c&apos;est
+              résolu. Plus court que les tutos, plus honnête.
+            </p>
+          </div>
+          <div className="nf-journal-list">
+            {journal.map((j) => (
+              <Link key={j.title} href={j.href} className="nf-journal-item">
+                <span className="nf-journal-date">{j.date}</span>
+                <span className="nf-journal-title">{j.title}</span>
+                <span className="nf-journal-arrow">→</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer className="nf-footer">
+        <div className="nf-footer-inner">
+          <div>
+            <Logo />
+            <p className="nf-footer-brand">
+              Construire son NAS de zéro, sans approximations. Self-hosted,
+              tutoriels reproductibles, hardware testé.
+            </p>
+          </div>
+          <div className="nf-footer-col">
+            <h4>Contenu</h4>
+            <Link href="#">Tutoriels</Link>
+            <Link href="#">Hardware</Link>
+            <Link href="#">Journal de build</Link>
+            <Link href="#">Glossaire ZFS</Link>
+          </div>
+          <div className="nf-footer-col">
+            <h4>Ressources</h4>
+            <Link href="#">Build de référence</Link>
+            <Link href="#">Liste de courses</Link>
+            <Link href="#">Diagrammes</Link>
+            <Link href="#">RSS</Link>
+          </div>
+          <div className="nf-footer-col">
+            <h4>Contact</h4>
+            <a href="https://github.com/nanog1980" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <Link href="#">Mastodon</Link>
+            <Link href="#">Email</Link>
+            <Link href="#">Ko-fi</Link>
+          </div>
+        </div>
+        <div className="nf-footer-bottom">
+          <span>© 2026 Nasforge · Self-hosted</span>
+          <span>Code source ouvert · MIT</span>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+const tutorials = [
+  {
+    tag: "hardware",
+    tagLabel: "Hardware",
+    title: "Choisir sa carte mère et son CPU pour TrueNAS",
+    desc: "ECC ou pas ? Combien de cœurs vraiment utiles ? Compatibilité ZFS et puissance pour Plex transcoding. Comparatif Ryzen / Xeon avec valeurs mesurées.",
+    step: "Étape 01",
+    read: "14 min",
+    href: "#",
+  },
+  {
+    tag: "os",
+    tagLabel: "OS",
+    title: "Installer TrueNAS Scale sur clé USB pas à pas",
+    desc: "Création de la clé bootable depuis Linux/Windows, BIOS, partitionnement, premier boot, configuration réseau et SSH. Captures de chaque écran.",
+    step: "Étape 04",
+    read: "22 min",
+    href: "#",
+  },
+  {
+    tag: "os",
+    tagLabel: "OS",
+    title: "Créer un pool ZFS RAIDZ2 et comprendre les choix",
+    desc: "RAIDZ1 vs RAIDZ2 vs mirror, ashift, recordsize, compression LZ4 vs ZSTD. Avec les benchmarks réels du build de référence.",
+    step: "Étape 05",
+    read: "18 min",
+    href: "#",
+  },
+  {
+    tag: "network",
+    tagLabel: "Réseau",
+    title: "Partage SMB sécurisé pour Mac, Linux, Windows",
+    desc: "Authentification, ACLs, dossiers privés/partagés, snapshots accessibles via Time Machine et Explorer. Sans tomber dans la galère SMB.",
+    step: "Étape 07",
+    read: "16 min",
+    href: "#",
+  },
+  {
+    tag: "security",
+    tagLabel: "Sécurité",
+    title: "Sauvegarde 3-2-1 avec snapshots ZFS et rsync.net",
+    desc: "Snapshots locaux, réplication off-site, encryption at-rest. Pourquoi rsync.net plutôt que Backblaze pour un NAS familial.",
+    step: "Étape 09",
+    read: "20 min",
+    href: "#",
+  },
+  {
+    tag: "network",
+    tagLabel: "Réseau",
+    title: "Exposer un service via Cloudflare Tunnel (sans port forward)",
+    desc: "Plex, Nextcloud ou autre app accessible depuis n'importe où, sans ouvrir le moindre port sur ta box. Setup en 10 minutes.",
+    step: "Étape 11",
+    read: "12 min",
+    href: "#",
+  },
+];
+
+const hardware = [
+  {
+    name: "ASRock B550 Pro4",
+    imgLabel: "carte mère",
+    spec: "AM4 · 6× SATA<br>2× M.2 · ECC OK",
+    price: "~ 145 €",
+  },
+  {
+    name: "Ryzen 5 5600G",
+    imgLabel: "CPU",
+    spec: "6c/12t · 65W TDP<br>iGPU pour transcoding",
+    price: "~ 130 €",
+  },
+  {
+    name: "Kingston Server 2× 16 GB",
+    imgLabel: "RAM",
+    spec: "DDR4 ECC 3200 MHz<br>CL22 unbuffered",
+    price: "~ 165 €",
+  },
+  {
+    name: "Seagate IronWolf 8 TB ×4",
+    imgLabel: "HDD",
+    spec: "7200 rpm · CMR<br>NAS-rated",
+    price: "~ 720 € (×4)",
+  },
+];
+
+const journal = [
+  {
+    date: "2026-05-08",
+    title: "Pourquoi j'ai abandonné Unraid pour TrueNAS Scale",
+    href: "#",
+  },
+  {
+    date: "2026-04-22",
+    title: "Mémoire ECC : utile ou marketing ? Mon retour après 18 mois",
+    href: "#",
+  },
+  {
+    date: "2026-04-03",
+    title: "scrub mensuel : je l'ai désactivé, voici pourquoi",
+    href: "#",
+  },
+  {
+    date: "2026-03-15",
+    title: "Mon NAS a perdu un disque, RAIDZ2 m'a sauvé la mise",
+    href: "#",
+  },
+];
