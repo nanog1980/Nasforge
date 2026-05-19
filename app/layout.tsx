@@ -20,10 +20,70 @@ const mono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
+const SITE_URL = "https://nasforge.fr";
+
 export const metadata: Metadata = {
-  title: "Nasforge — Forge ton propre NAS",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Nasforge — Forge ton propre NAS",
+    template: "%s · Nasforge",
+  },
   description:
-    "Tutoriels concrets pour construire un NAS de zéro : sélection des composants, assemblage, install TrueNAS Scale, partages, sauvegarde, monitoring.",
+    "Tutoriels concrets pour construire un NAS de zéro : sélection des composants, assemblage, install TrueNAS Scale, partages SMB/NFS, sauvegarde ZFS, monitoring. Self-hosted, open source.",
+  applicationName: "Nasforge",
+  authors: [{ name: "nanog1980", url: "https://github.com/nanog1980" }],
+  creator: "nanog1980",
+  keywords: [
+    "NAS",
+    "TrueNAS Scale",
+    "TrueNAS",
+    "self-hosted",
+    "auto-hébergé",
+    "ZFS",
+    "stockage",
+    "serveur de fichiers",
+    "SMB",
+    "NFS",
+    "sauvegarde",
+    "monitoring",
+    "tutoriel NAS",
+    "construction NAS",
+    "homelab",
+    "Nasforge",
+  ],
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Nasforge",
+    title: "Nasforge — Forge ton propre NAS",
+    description:
+      "Guide complet pour construire son propre NAS — du choix des composants à TrueNAS Scale. Tutos hardware, ZFS, partages, sauvegarde, monitoring.",
+    locale: "fr_FR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nasforge — Forge ton propre NAS",
+    description:
+      "Tutos pour construire son NAS de zéro : hardware, TrueNAS Scale, ZFS, partages, sauvegarde.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

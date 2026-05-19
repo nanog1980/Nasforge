@@ -1,0 +1,39 @@
+---
+title: 'Datasets et vdevs'
+description: 'Comprendre les datasets ZFS et les vdevs : organisation du stockage, snapshots.'
+slug: 'datasets-et-vdevs'
+section: 'partie-logicielle'
+---
+
+***VDEV (Virtual Device)***
+
+- **Rôle fondamental :** Un VDEV est l'élément de base de stockage dans un pool ZFS (Zettabyte File System) de TrueNAS. Il représente un ou plusieurs disques physiques ou virtuels configurés ensemble pour fournir une certaine capacité de stockage et une certaine redondance.
+- **Types de VDEV :**
+  - **Miroir (Mirror) :** Les données sont dupliquées sur plusieurs disques, offrant une redondance élevée.
+  - **RAIDZ1, RAIDZ2, RAIDZ3 :** Ces configurations utilisent la parité pour fournir une redondance, permettant la perte d'un, deux ou trois disques respectivement.
+  - **Stripe :** Les données sont réparties sur plusieurs disques sans redondance, offrant des performances élevées mais avec un risque de perte de données en cas de défaillance d'un disque.
+- **Création et gestion :** Les VDEV sont créés lors de la configuration d'un pool de stockage dans TrueNAS. Il est crucial de planifier soigneusement les VDEV en fonction des besoins de performance, de capacité et de redondance.
+
+***Datasets***
+
+- **Organisation des données :** Un dataset est un système de fichiers au sein d'un pool ZFS. Ils permettent d'organiser les données de manière logique et de définir des propriétés spécifiques pour chaque ensemble de données.
+- **Fonctionnalités clés :**
+  - **Gestion des autorisations :** Les datasets peuvent avoir des autorisations d'accès distinctes, ce qui permet de contrôler qui peut lire, écrire ou exécuter des fichiers.
+  - **Snapshots :** Les datasets permettent de créer des instantanés (snapshots) pour sauvegarder l'état des données à un moment donné.
+  - **Compression et déduplication :** Les datasets peuvent être configurés pour compresser ou dédupliquer les données, ce qui permet d'économiser de l'espace de stockage.
+  - **Quotas :** Les datasets peuvent avoir des quotas pour limiter l'espace de stockage qu'ils peuvent utiliser.
+- **Utilisation :** Les datasets sont utilisés pour organiser les données en fonction de leur type, de leur utilisation ou de leur importance. Par exemple, vous pouvez créer un dataset pour les sauvegardes, un autre pour les fichiers multimédias et un autre pour les documents.
+
+***Relation entre VDEV et Datasets***
+
+- Les VDEV fournissent l'espace de stockage brut, tandis que les datasets organisent et gèrent les données dans cet espace.
+- Un pool ZFS est composé d'un ou plusieurs VDEV, et les datasets sont créés au sein de ce pool.
+- En termes simples, les VDEV sont les disques qui stockent les données et les Datasets sont les dossiers qui permettent d'organiser ces informations sur les disques.
+
+***Conseils supplémentaires***
+
+- Planifiez soigneusement votre configuration de VDEV en fonction de vos besoins de performance et de redondance.
+- Utilisez les datasets pour organiser vos données de manière logique et pour appliquer des propriétés spécifiques à chaque ensemble de données.
+- Tirez parti des fonctionnalités de snapshot et de compression pour protéger vos données et économiser de l'espace de stockage.
+
+
