@@ -1,0 +1,4 @@
+Contact: mailto:admin@nasforge.fr
+Expires: 2027-08-09T00:00:00.000Z
+Preferred-Languages: fr
+Canonical: https://nasforge.fr/.well-known/security.txt
