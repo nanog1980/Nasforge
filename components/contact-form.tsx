@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-const ENDPOINT = "https://api.web3forms.com/submit";
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+const ENDPOINT = "/api/contact";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -11,34 +10,12 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
-  if (!ACCESS_KEY) {
-    return (
-      <div className="nf-contact-pending">
-        <p>
-          Le formulaire de contact est en cours de configuration. En attendant,
-          écris-moi via{" "}
-          <a
-            href="https://github.com/nanog1980"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          .
-        </p>
-      </div>
-    );
-  }
-
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     setStatus("sending");
     setErrorMsg("");
     const formData = new FormData(form);
-    formData.append("access_key", ACCESS_KEY);
-    formData.append("from_name", "Nasforge — formulaire contact");
-    formData.append("subject", `[Nasforge] ${formData.get("subject") || "Message"}`);
 
     try {
       const res = await fetch(ENDPOINT, {
