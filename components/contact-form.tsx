@@ -3,7 +3,12 @@
 import { useState } from "react";
 import Script from "next/script";
 
-const ENDPOINT = "/api/contact";
+// Web3Forms (plan gratuit) refuse les soumissions serveur-à-serveur : la
+// vérification anti-robot passe par notre API, mais l'envoi réel doit
+// partir du navigateur.
+const VERIFY_ENDPOINT = "/api/contact";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -11,6 +16,25 @@ type Status = "idle" | "sending" | "success" | "error";
 export function ContactForm({ nonce }: { nonce?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
+
+  if (!WEB3FORMS_ACCESS_KEY) {
+    return (
+      <div className="nf-contact-pending">
+        <p>
+          Le formulaire de contact est en cours de configuration. En attendant,
+          écris-moi via{" "}
+          <a
+            href="https://github.com/nanog1980"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          .
+        </p>
+      </div>
+    );
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,9 +44,31 @@ export function ContactForm({ nonce }: { nonce?: string }) {
     const formData = new FormData(form);
 
     try {
-      const res = await fetch(ENDPOINT, {
+      const verifyRes = await fetch(VERIFY_ENDPOINT, {
         method: "POST",
         body: formData,
+      });
+      const verifyData = await verifyRes.json();
+      if (!verifyData.success) {
+        setStatus("error");
+        setErrorMsg(verifyData.message || "Vérification échouée.");
+        return;
+      }
+
+      const submission = new FormData();
+      submission.append("access_key", WEB3FORMS_ACCESS_KEY);
+      submission.append("name", String(formData.get("name") ?? ""));
+      submission.append("email", String(formData.get("email") ?? ""));
+      submission.append("message", String(formData.get("message") ?? ""));
+      submission.append("from_name", "Nasforge — formulaire contact");
+      submission.append(
+        "subject",
+        `[Nasforge] ${formData.get("subject") || "Message"}`
+      );
+
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        body: submission,
       });
       const data = await res.json();
       if (data.success) {

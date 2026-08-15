@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://m.media-amazon.com https://img.youtube.com;
     font-src 'self' data:;
-    connect-src 'self' https://challenges.cloudflare.com;
+    connect-src 'self' https://challenges.cloudflare.com https://api.web3forms.com;
     frame-src https://challenges.cloudflare.com;
     frame-ancestors 'self';
     base-uri 'self';
