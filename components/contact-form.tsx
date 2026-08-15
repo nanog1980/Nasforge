@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Script from "next/script";
 
 const ENDPOINT = "/api/contact";
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type Status = "idle" | "sending" | "success" | "error";
 
-export function ContactForm() {
+export function ContactForm({ nonce }: { nonce?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
 
@@ -58,75 +60,87 @@ export function ContactForm() {
   }
 
   return (
-    <form className="nf-contact-form" onSubmit={onSubmit} noValidate>
-      <div className="nf-contact-row">
+    <>
+      {TURNSTILE_SITE_KEY && (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          strategy="lazyOnload"
+          nonce={nonce}
+        />
+      )}
+      <form className="nf-contact-form" onSubmit={onSubmit} noValidate>
+        <div className="nf-contact-row">
+          <label className="nf-contact-field">
+            <span>Nom</span>
+            <input
+              type="text"
+              name="name"
+              required
+              autoComplete="name"
+              placeholder="Ton nom ou pseudo"
+              disabled={status === "sending"}
+            />
+          </label>
+          <label className="nf-contact-field">
+            <span>Email</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autoComplete="email"
+              placeholder="toi@exemple.fr"
+              disabled={status === "sending"}
+            />
+          </label>
+        </div>
         <label className="nf-contact-field">
-          <span>Nom</span>
+          <span>Sujet</span>
           <input
             type="text"
-            name="name"
+            name="subject"
             required
-            autoComplete="name"
-            placeholder="Ton nom ou pseudo"
+            placeholder="Question hardware, retour sur un tuto, suggestion…"
             disabled={status === "sending"}
           />
         </label>
         <label className="nf-contact-field">
-          <span>Email</span>
-          <input
-            type="email"
-            name="email"
+          <span>Message</span>
+          <textarea
+            name="message"
             required
-            autoComplete="email"
-            placeholder="toi@exemple.fr"
+            rows={7}
+            placeholder="Ton message…"
             disabled={status === "sending"}
           />
         </label>
-      </div>
-      <label className="nf-contact-field">
-        <span>Sujet</span>
+        {/* Honeypot field — bots fill it, humans don't see it */}
         <input
-          type="text"
-          name="subject"
-          required
-          placeholder="Question hardware, retour sur un tuto, suggestion…"
-          disabled={status === "sending"}
+          type="checkbox"
+          name="botcheck"
+          style={{ display: "none" }}
+          tabIndex={-1}
+          autoComplete="off"
         />
-      </label>
-      <label className="nf-contact-field">
-        <span>Message</span>
-        <textarea
-          name="message"
-          required
-          rows={7}
-          placeholder="Ton message…"
-          disabled={status === "sending"}
-        />
-      </label>
-      {/* Honeypot field — bots fill it, humans don't see it */}
-      <input
-        type="checkbox"
-        name="botcheck"
-        style={{ display: "none" }}
-        tabIndex={-1}
-        autoComplete="off"
-      />
-      <div className="nf-contact-actions">
-        <button
-          type="submit"
-          className="nf-btn-primary"
-          disabled={status === "sending"}
-        >
-          {status === "sending" ? "Envoi en cours…" : "Envoyer →"}
-        </button>
-        {status === "error" && (
-          <p className="nf-contact-error">Erreur : {errorMsg}</p>
+        {TURNSTILE_SITE_KEY && (
+          <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} />
         )}
-      </div>
-      <p className="nf-contact-privacy">
-        Ton email reste privé — il n&apos;est utilisé que pour ma réponse, jamais
-        partagé ni stocké ailleurs que dans ma boîte mail.
-      </p>
-    </form>
+        <div className="nf-contact-actions">
+          <button
+            type="submit"
+            className="nf-btn-primary"
+            disabled={status === "sending"}
+          >
+            {status === "sending" ? "Envoi en cours…" : "Envoyer →"}
+          </button>
+          {status === "error" && (
+            <p className="nf-contact-error">Erreur : {errorMsg}</p>
+          )}
+        </div>
+        <p className="nf-contact-privacy">
+          Ton email reste privé — il n&apos;est utilisé que pour ma réponse,
+          jamais partagé ni stocké ailleurs que dans ma boîte mail.
+        </p>
+      </form>
+    </>
   );
 }

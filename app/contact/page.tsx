@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { ContactForm } from "@/components/contact-form";
 
 const ForgeLogo = () => (
@@ -38,7 +39,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
+
   return (
     <div className="nf-article-page">
       <header className="nf-header">
@@ -90,7 +93,7 @@ export default function ContactPage() {
           </header>
 
           <div className="nf-article-body">
-            <ContactForm />
+            <ContactForm nonce={nonce} />
           </div>
         </article>
       </main>

@@ -5,11 +5,12 @@ export function middleware(request: NextRequest) {
 
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://challenges.cloudflare.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://m.media-amazon.com https://img.youtube.com;
     font-src 'self' data:;
-    connect-src 'self';
+    connect-src 'self' https://challenges.cloudflare.com;
+    frame-src https://challenges.cloudflare.com;
     frame-ancestors 'self';
     base-uri 'self';
     form-action 'self';
